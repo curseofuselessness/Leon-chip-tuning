@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.fake_db import fake_db
+
 app = FastAPI()
 
 app.add_middleware(
@@ -10,11 +12,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-fake_db = {
-    "users": [{"id": 1, "email": "test@example.com"}],
-    "firmwares": [{"id": 1, "name": "Audi A4 Stage 2", "price": 100}],
-}
 
 
 @app.get("/")
