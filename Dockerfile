@@ -1,16 +1,13 @@
 # ---- 1. СБОРКА ФРОНТА ----
-FROM node:18-alpine AS frontend-builder
+FROM node:20-alpine AS frontend-builder  # 👈 ЗАМЕНИ НА 20 ИЛИ 22
 
 WORKDIR /app/frontend
 
-# Копируем package.json и устанавливаем зависимости
 COPY frontend/package*.json ./
 RUN npm install
 
-# Копируем ВСЁ (кроме того, что в .dockerignore)
 COPY frontend/ ./
 
-# Собираем фронт (теперь dist появится внутри контейнера)
 RUN npm run build
 
 # ---- 2. СБОРКА БЭКА ----
@@ -28,7 +25,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app/ ./app/
 
-# Копируем собранный фронт из первой стадии
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 
 EXPOSE 8000
