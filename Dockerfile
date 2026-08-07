@@ -1,5 +1,4 @@
-# ---- 1. СБОРКА ФРОНТА ----
-FROM node:20-alpine AS frontend-builder  # 👈 ЗАМЕНИ НА 20 ИЛИ 22
+FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app/frontend
 
@@ -7,10 +6,8 @@ COPY frontend/package*.json ./
 RUN npm install
 
 COPY frontend/ ./
-
 RUN npm run build
 
-# ---- 2. СБОРКА БЭКА ----
 FROM python:3.11-slim
 
 WORKDIR /app
